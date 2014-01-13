@@ -56,7 +56,7 @@ var DrawingCanvas = React.createClass({
 	render:function() {
 		var finalBannerStyle = {height:this.props.height, width: this.props.width, position:"relative", overflow:"hidden"}
 		var renderLayer = function(layer, i) {
-			return 	<div key={i} style={layer.style}>{layer.text}</div>
+			return 	React.DOM[layer.ele_type]({key:i, style: layer.style}, layer.text)
 		}
 		return (
 			<div>  
@@ -69,7 +69,7 @@ var DrawingCanvas = React.createClass({
 	}
 });
 
-var Layer = function(name, style, text) {
+var Layer = function(name, style, text, ele_type) {
 	var default_style = {
 		position:"absolute",
 		top: "0px",
@@ -81,22 +81,8 @@ var Layer = function(name, style, text) {
 	this.name = name;
 	this.style = _.extend({}, default_style, style)
 	this.text =  text || name || "";
+	this.ele_type = ele_type || "div";
 }
-
-var RLayer = React.createClass({
-  getInitialState: function() {
-    return {
-			style: {},
-			name: this.props.name
-		}
-	},
-	render:function() {
-		return (
-			<div style={this.state.style}> 
-			</div>
-		);
-	}
-})
 
 
 var LayerManager = React.createClass({
