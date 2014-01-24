@@ -42,8 +42,8 @@ var Toolset = React.createClass({
 
 
 var DrawingCanvas = React.createClass({
-  getInitialState: function() {
-    return {
+  	getInitialState: function() {
+    	return {
 			layers: [],
 		}
 	},
@@ -115,7 +115,7 @@ var LayerManager = React.createClass({
 	render:function() {
 		var showLayerName = function(layer, i) {
 			var click_fn = this.setActiveLayer.bind(this, i);
-			return <li onClick={click_fn} key={i}>{layer.name}</li>
+			return <li style={this.state.activeLayer == layer ? {background:"grey",width:"70px"} : {}} onClick={click_fn} key={i}>{layer.name}</li>
 		}
 		return (
 			<div> 
