@@ -72,6 +72,7 @@ var DrawingCanvas = React.createClass({
 var Layer = function(name, style, text, ele_type) {
 	var default_style = {
 		position:"absolute",
+		fontSize:"10px",
 		top: "0px",
 		left: "0px",
 		background: "transparent",
@@ -112,10 +113,17 @@ var LayerManager = React.createClass({
 		layers[index] = layer
 		this.setState({layers: layers})
 	},
+	removeLayer: function(index){
+		var layer = this.state.layers[index];
+		console.log("Removed " + layer.name);
+		 this.state.layers.splice(index,1);
+	},
 	render:function() {
 		var showLayerName = function(layer, i) {
 			var click_fn = this.setActiveLayer.bind(this, i);
-			return <li style={this.state.activeLayer == layer ? {background:"grey",width:"70px"} : {}} onClick={click_fn} key={i}>{layer.name}</li>
+			return <li style={this.state.activeLayer == layer ? {background:"grey",width:"150px"} : {}} onClick={click_fn} key={i}>{layer.name} - 
+						<a href="#" onClick={this.removeLayer.bind(this,i)}> Remove</a>
+				   </li>
 		}
 		return (
 			<div> 
