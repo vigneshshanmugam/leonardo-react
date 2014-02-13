@@ -15,42 +15,57 @@
 	</div>	
 
 	<script type="text/javascript">
-		var draggedElement = null;
-		function eleMouseDown (e){
-			var target = e.target;
-			if(target && target.className == "draggable"){
-				draggedElement = target;
-				draggedElement.style.color = "red";
+		(function(){
+			var draggedElement = null;
+			var container = document.getElementById("dragContainer");
+			function eleMouseDown (e){
+				var target = e.target;
+				if(target && target.className == "draggable"){
+					draggedElement = target;
+					draggedElement.style.color = "red";
+				}
+				document.addEventListener ("mousemove" , eleMouseMove , false);
 			}
-		}
 
-		function eleMouseMove (e) {
-            var pX = e.pageX,
-                pY = e.pageY;
+			function eleMouseMove (e) {
+	            var pX = e.pageX,
+	                pY = e.pageY;
 
-            e.preventDefault();
-            if (!draggedElement) {
-                return;
-            }
-            draggedElement.style.position = "absolute";
-            draggedElement.style.top = pY + 'px';
-            draggedElement.style.left = pX + 'px';
-        }
+	            e.preventDefault();
+	            if (!draggedElement) {
+	                return;
+	            }
 
-        function eleMouseUp(e)
-        {
-            if (draggedElement != null)
-            {
-                document.onmousemove = null;
-                document.onselectstart = null;
+	            var dragLeft = dragContainer.offsetLeft,
+	            dragRight = dragContainer.offsetWidth - draggedElement.clientWidth;
+	            dragBottom = dragContainer.offsetTop + draggedElement.clientHeight;
+	            dragTop = dragContainer.offsetTop;
+	            
+	            if((pX >= dragLeft && pX <= dragRight) && (pY >= dragTop && pY <=  dragBottom)){
+		          	draggedElement.style.position = "fixed";
+		            draggedElement.style.top = pY + 'px';
+		            draggedElement.style.left = pX + 'px';
+	            }else{
+	            	return;
+	            }
 
-                draggedElement.style.color = "";
-                draggedElement = null;
-            }
-        }
-		document.addEventListener ("mousedown" , eleMouseDown , false);
-        document.addEventListener ("mousemove" , eleMouseMove , false);
-        document.addEventListener ("mouseup" , eleMouseUp , false);
+	            document.addEventListener ("mouseup" , eleMouseUp , false);
+	        }
+
+	        function eleMouseUp(e)
+	        {
+	            if (draggedElement != null)
+	            {
+	                document.onmousemove = null;
+	                document.onselectstart = null;
+
+	                draggedElement.style.color = "";
+	                draggedElement = null;
+	            }
+	        }
+			document.addEventListener ("mousedown" , eleMouseDown , false);
+	        
+		})();
 	</script>
 </body>
 </html>

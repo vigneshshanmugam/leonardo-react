@@ -60,7 +60,7 @@ var DrawingCanvas = React.createClass({
 		return (
 			<div>  
 			<h2>Canvas</h2>
-			   <div ref="test" className="final-banner" style={finalBannerStyle}> 
+			   <div ref="test" id="dragContainer" className="final-banner" style={finalBannerStyle}> 
 				    {this.state.layers.map(renderLayer)}
 				 </div>	
 			</div>
@@ -76,8 +76,9 @@ var Layer = function(name, style, text, ele_type) {
 		top: "0px",
 		left: "0px",
 		background: "transparent",
-		width: "60%",
-		height: "60%"
+		width: "300px",
+		height: "100px",
+		border: "1px solid blue"
 	}
 	this.name = name;
 	this.style = _.extend({}, default_style, style)
