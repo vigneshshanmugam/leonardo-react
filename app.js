@@ -3,7 +3,7 @@
 var Project = React.createClass({
   getInitialState: function() {
     return {
-			name: "Test Project",
+			name: "HTML Banners",
 		};
   },
   render: function() {
@@ -20,7 +20,6 @@ var Project = React.createClass({
 						<LayerManager />
 				</div>			
 			</div>
-			
     );
   }
 });
@@ -56,7 +55,7 @@ var DrawingCanvas = React.createClass({
 	render:function() {
 		var finalBannerStyle = {height:this.props.height, width: this.props.width, position:"relative", overflow:"hidden"}
 		var renderLayer = function(layer, i) {
-			return 	React.DOM[layer.ele_type]({key:i, style: layer.style}, layer.text)
+			return 	React.DOM[layer.ele_type]({key:i, className: "draggable", style: layer.style}, layer.text)
 		}
 		return (
 			<div>  
@@ -72,12 +71,13 @@ var DrawingCanvas = React.createClass({
 var Layer = function(name, style, text, ele_type) {
 	var default_style = {
 		position:"absolute",
-		fontSize:"10px",
+		fontSize:"20px",
+		fontFamily:"arial, serif",
 		top: "0px",
 		left: "0px",
 		background: "transparent",
-		width: "100%",
-		height: "100%" 
+		width: "60%",
+		height: "60%"
 	}
 	this.name = name;
 	this.style = _.extend({}, default_style, style)
@@ -97,7 +97,7 @@ var LayerManager = React.createClass({
 		
 		 e.preventDefault();
 		var count = this.state.layers.length + 1;
-		var layers = this.state.layers.concat([new Layer("layer "+count, {zIndex:count})]);
+		var layers = this.state.layers.concat([new Layer("layer "+count, {zIndex:count,cursor:"move"})]);
 		this.setState({layers: layers});
 	},
 	componentWillUpdate: function(nextProps, nextState) {
@@ -110,7 +110,7 @@ var LayerManager = React.createClass({
 	},
 	editLayer: function(index, layer) {
 		var layers = this.state.layers;
-		layers[index] = layer
+		layers[index] = layer;
 		this.setState({layers: layers})
 	},
 	removeLayer: function(index){

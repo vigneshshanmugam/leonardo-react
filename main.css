@@ -1,0 +1,9 @@
+.final-banner {
+	border: 1px solid #D8D1D1;
+	position: relative;
+}
+
+.dragging {
+	border: 1px solid blue;
+	cursor: move;
+}

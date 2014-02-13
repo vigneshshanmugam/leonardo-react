@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<link rel="stylesheet" type="text/css" href="main.css">
 	<script src="bower_components/underscore/underscore-min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="bower_components/react/react.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="bower_components/react/JSXTransformer.js" type="text/javascript" charset="utf-8"></script>
@@ -12,5 +13,44 @@
 <body>
 	<div id="app">
 	</div>	
+
+	<script type="text/javascript">
+		var draggedElement = null;
+		function eleMouseDown (e){
+			var target = e.target;
+			if(target && target.className == "draggable"){
+				draggedElement = target;
+				draggedElement.style.color = "red";
+			}
+		}
+
+		function eleMouseMove (e) {
+            var pX = e.pageX,
+                pY = e.pageY;
+
+            e.preventDefault();
+            if (!draggedElement) {
+                return;
+            }
+            draggedElement.style.position = "absolute";
+            draggedElement.style.top = pY + 'px';
+            draggedElement.style.left = pX + 'px';
+        }
+
+        function eleMouseUp(e)
+        {
+            if (draggedElement != null)
+            {
+                document.onmousemove = null;
+                document.onselectstart = null;
+
+                draggedElement.style.color = "";
+                draggedElement = null;
+            }
+        }
+		document.addEventListener ("mousedown" , eleMouseDown , false);
+        document.addEventListener ("mousemove" , eleMouseMove , false);
+        document.addEventListener ("mouseup" , eleMouseUp , false);
+	</script>
 </body>
 </html>
