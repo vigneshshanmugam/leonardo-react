@@ -9,7 +9,7 @@ var Project = React.createClass({
   render: function() {
     return (
 			<div className="project">
-		    <div className="project-name">{this.state.name}</div>
+		    	<div className="project-name">{this.state.name}</div>
 				<div className="toolset-container">
 						<Toolset tools={this.props.tools} />
 				</div>
@@ -18,6 +18,9 @@ var Project = React.createClass({
 				</div>
 				<div className="layer-manager">
 						<LayerManager />
+				</div>
+				<div className="result">
+					<HtmlGenerator />
 				</div>			
 			</div>
     );
@@ -187,6 +190,17 @@ var LayerEditor = React.createClass({
 	}
 });
 
+var HtmlGenerator = React.createClass({
+	render: function(){
+		return (
+			<div>
+				<h2> HTML Content </h2>
+				<div className="html-result"></div>
+			</div>
+		);
+	}
+});
+
 var PaintBucketTool = React.createClass({
 	render:function() {
 		return (
@@ -217,6 +231,6 @@ var MoveTool = React.createClass({
 
 var available_tool_list = []
 React.renderComponent(
-  <Project tools={available_tool_list} width="700" height="200" />,
+  <Project tools={available_tool_list} width="730" height="300" />,
   document.getElementById('app')
 );

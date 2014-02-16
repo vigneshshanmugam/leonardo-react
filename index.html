@@ -38,7 +38,7 @@
 
 	            var dragLeft = dragContainer.offsetLeft,
 	            dragRight = dragContainer.offsetWidth - draggedElement.clientWidth;
-	            dragBottom = dragContainer.offsetTop + draggedElement.clientHeight;
+	            dragBottom = dragContainer.offsetHeight + dragContainer.offsetTop - draggedElement.clientHeight;
 	            dragTop = dragContainer.offsetTop;
 	            
 	            if((pX >= dragLeft && pX <= dragRight) && (pY >= dragTop && pY <=  dragBottom)){
