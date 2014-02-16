@@ -129,7 +129,7 @@ var LayerManager = React.createClass({
 		return (
 			<div> 
 					<h2>Layers</h2>
-					<a href="#" onClick={this.addLayer}>add layer</a>
+					<button onClick={this.addLayer}>Add layer</button>
 					<ul>
 						{this.state.layers.map(showLayerName, this)}
 					</ul>
@@ -173,11 +173,11 @@ var LayerEditor = React.createClass({
 			   Editing {' '}	{layer.name}
 				---
 				<div>
-				text: <input type="text" onChange={this.onTextChange}  value={layer.text}/>
+				Text : <input type="text" onChange={this.onTextChange}  value={layer.text}/>
 				</div>
 				<div>
 						<br/>
-						style:
+						Style Properties:
 						<ul>
 						   {_.map(layer.style,renderProperty, this)}
 						</ul>
