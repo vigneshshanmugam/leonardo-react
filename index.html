@@ -17,39 +17,49 @@
 	<script type="text/javascript">
 		(function(){
 			var draggedElement = null;
-			var container = document.getElementById("dragContainer");
+			var container = document.getElementById("dragContainer"), startX,startY,initialMouseX,initialMouseY;
+
+			function initDragDrop(){
+				document.addEventListener ("mousedown" , eleMouseDown , false);
+			}
 			function eleMouseDown (e){
 				var target = e.target;
 				if(target && target.className == "draggable"){
+					startX = target.offsetLeft;
+					startY = target.offsetTop;
 					draggedElement = target;
-					draggedElement.style.color = "red";
 				}
+				initialMouseX = e.clientX;
+				initialMouseY = e.clientY;
 				document.addEventListener ("mousemove" , eleMouseMove , false);
+				document.addEventListener ("mouseup" , eleMouseUp , false);
+				return false;
 			}
 
 			function eleMouseMove (e) {
-	            var pX = e.pageX,
-	                pY = e.pageY;
-
-	            e.preventDefault();
+	            
 	            if (!draggedElement) {
 	                return;
 	            }
+				var dX = e.clientX - initialMouseX;
+				var dY = e.clientY - initialMouseY;
 
-	            var dragLeft = dragContainer.offsetLeft,
-	            dragRight = dragContainer.offsetWidth - draggedElement.clientWidth;
-	            dragBottom = dragContainer.offsetHeight + dragContainer.offsetTop - draggedElement.clientHeight;
-	            dragTop = dragContainer.offsetTop;
-	            
-	            if((pX >= dragLeft && pX <= dragRight) && (pY >= dragTop && pY <=  dragBottom)){
-		          	draggedElement.style.position = "fixed";
-		            draggedElement.style.top = pY + 'px';
-		            draggedElement.style.left = pX + 'px';
-	            }else{
-	            	return;
-	            }
+				var allowedWidth = dragContainer.offsetWidth - draggedElement.clientWidth, 
+					allowedHeight = dragContainer.offsetHeight - draggedElement.clientHeight;
 
-	            document.addEventListener ("mouseup" , eleMouseUp , false);
+				setPosition(dX,dY,allowedWidth,allowedHeight);
+				
+	            return false;
+	 	    }
+
+	        function setPosition(dx,dy,allowedWidth,allowedHeight){
+	        	var calcLeft = startX + dx , calcTop = startY + dy; 
+	        	if(calcLeft >= 0 && calcLeft <= allowedWidth){
+	        		draggedElement.style.left = calcLeft + 'px';
+	        	}
+	        	if(calcTop >= 0 && calcTop <= allowedHeight){
+	        		draggedElement.style.top =  calcTop + 'px';
+	        	}
 	        }
 
 	        function eleMouseUp(e)
@@ -59,12 +69,10 @@
 	                document.onmousemove = null;
 	                document.onselectstart = null;
 
-	                draggedElement.style.color = "";
 	                draggedElement = null;
 	            }
 	        }
-			document.addEventListener ("mousedown" , eleMouseDown , false);
-	        
+	        window.onload = initDragDrop();
 		})();
 	</script>
 </body>
