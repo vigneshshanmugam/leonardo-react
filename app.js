@@ -58,7 +58,7 @@ var DrawingCanvas = React.createClass({
 	render:function() {
 		var finalBannerStyle = {height:this.props.height, width: this.props.width, position:"relative", overflow:"hidden"}
 		var renderLayer = function(layer, i) {
-			return 	React.DOM[layer.ele_type]({key:i, className: "draggable", style: layer.style}, layer.text)
+			return 	React.DOM.div({className: "draggable", key:i, style: layer.style},React.DOM.a({href:layer.href},layer.text));
 		}
 		return (
 			<div>  
@@ -160,6 +160,11 @@ var LayerEditor = React.createClass({
 		layer.text = e.target.value;
 		this.setState({layer: layer}, this.onChange.bind(this));
 	},
+	onLinkChange:function(e){
+		var layer = this.state.layer;
+		layer.href = e.target.value;
+		this.setState({layer: layer}, this.onChange.bind(this));
+	},
 	onStylePropChange: function(key, e){
 		var layer= this.state.layer;
 		layer.style[key] =  e.target.value;
@@ -177,6 +182,7 @@ var LayerEditor = React.createClass({
 				---
 				<div>
 				Text : <input type="text" onChange={this.onTextChange}  value={layer.text}/>
+				Link : <input type="text" onChange={this.onLinkChange}  value={layer.href}/>
 				</div>
 				<div>
 						<br/>
