@@ -6,13 +6,13 @@
 	<script src="bower_components/react/react.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="bower_components/react/JSXTransformer.js" type="text/javascript" charset="utf-8"></script>
 	<script src="EventBus.js" type="text/javascript" charset="utf-8"></script>
-	
+
 	<script src="app.js" type="text/jsx" charset="utf-8"></script>
-	
+
 </head>
 <body>
 	<div id="app">
-	</div>	
+	</div>
 
 	<script type="text/javascript">
 		(function(){
@@ -37,23 +37,27 @@
 			}
 
 			function eleMouseMove (e) {
-	            
-	            if (!draggedElement) {
-	                return;
-	            }
-				var dX = e.clientX - initialMouseX;
-				var dY = e.clientY - initialMouseY;
 
-				var allowedWidth = dragContainer.offsetWidth - draggedElement.clientWidth, 
-					allowedHeight = dragContainer.offsetHeight - draggedElement.clientHeight;
+          if (!draggedElement) {
+              return;
+          }
+					var dX = e.clientX - initialMouseX;
+					var dY = e.clientY - initialMouseY;
 
-				setPosition(dX,dY,allowedWidth,allowedHeight);
-				
-	            return false;
-	 	    }
+
+					var allowedWidth = dragContainer.clientWidth - draggedElement.clientWidth,
+						allowedHeight = dragContainer.clientHeight - draggedElement.clientHeight;
+
+						// console.log("allowedWidth  : " + allowedWidth + "...." + "allowedHeight :  " + allowedHeight);
+
+					setPosition(dX,dY,allowedWidth,allowedHeight);
+
+		      return false;
+	 		}
 
 	        function setPosition(dx,dy,allowedWidth,allowedHeight){
-	        	var calcLeft = startX + dx , calcTop = startY + dy; 
+	        	var calcLeft = startX + dx , calcTop = startY + dy;
+						// console.log("calcLeft  : " + calcLeft + "...." + "calcTop :  " + calcTop);
 	        	if(calcLeft >= 0 && calcLeft <= allowedWidth){
 	        		draggedElement.style.left = calcLeft + 'px';
 	        	}

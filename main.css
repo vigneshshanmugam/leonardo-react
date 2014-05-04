@@ -4,11 +4,12 @@
 }
 
 .dragging {
-	border: 1px solid blue;
+	outline: 1px solid blue;
 	cursor: move;
 }
 
 .project .html-result {
+	margin-top:10px;
 	border: 1px solid #D8D1D1;
 	width: 730px;
 	height: 200px;

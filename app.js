@@ -3,7 +3,7 @@
 var Project = React.createClass({
   getInitialState: function() {
     return {
-			name: "HTML Banners",
+			name: "HTML Banner Creation Tool",
 		};
   },
   render: function() {
@@ -21,7 +21,7 @@ var Project = React.createClass({
 				</div>
 				<div className="result">
 					<HtmlGenerator />
-				</div>			
+				</div>
 			</div>
     );
   }
@@ -53,7 +53,7 @@ var DrawingCanvas = React.createClass({
 		EventBus.addEventListener("layers_updated", function(event, props, state){
 			this.setState({layers:state.layers});
 		}, this);
-	
+
 	},
 	render:function() {
 		var finalBannerStyle = {height:this.props.height, width: this.props.width, position:"relative", overflow:"hidden"}
@@ -61,11 +61,11 @@ var DrawingCanvas = React.createClass({
 			return 	React.DOM.div({className: "draggable", key:i, style: layer.style},React.DOM.a({href:layer.href},layer.text));
 		}
 		return (
-			<div>  
+			<div>
 			<h2>Canvas</h2>
-			   <div ref="test" id="dragContainer" className="final-banner" style={finalBannerStyle}> 
+			   <div ref="test" id="dragContainer" className="final-banner" style={finalBannerStyle}>
 				    {this.state.layers.map(renderLayer)}
-				 </div>	
+				 </div>
 			</div>
 		);
 	}
@@ -98,14 +98,13 @@ var LayerManager = React.createClass({
 		}
 	},
 	addLayer: function(e) {
-		
-		 e.preventDefault();
+		e.preventDefault();
 		var count = this.state.layers.length + 1;
 		var layers = this.state.layers.concat([new Layer("layer "+count, {zIndex:count,cursor:"move"})]);
 		this.setState({layers: layers});
 	},
 	componentWillUpdate: function(nextProps, nextState) {
-	   EventBus.dispatch("layers_updated", this, nextProps, nextState );	
+	   EventBus.dispatch("layers_updated", this, nextProps, nextState );
   },
 	setActiveLayer: function(index) {
 		console.log("clicked", index);
@@ -125,12 +124,12 @@ var LayerManager = React.createClass({
 	render:function() {
 		var showLayerName = function(layer, i) {
 			var click_fn = this.setActiveLayer.bind(this, i);
-			return <li style={this.state.activeLayer == layer ? {background:"grey",width:"150px"} : {}} onClick={click_fn} key={i}>{layer.name} - 
+			return <li style={this.state.activeLayer == layer ? {background:"grey",width:"150px"} : {}} onClick={click_fn} key={i}>{layer.name} -
 						<a href="#" onClick={this.removeLayer.bind(this,i)}> Remove</a>
 				   </li>
 		}
 		return (
-			<div> 
+			<div>
 					<h2>Layers</h2>
 					<button onClick={this.addLayer}>Add layer</button>
 					<ul>
@@ -145,7 +144,7 @@ var LayerManager = React.createClass({
 var LayerEditor = React.createClass({
 	getInitialState: function() {
 		return {
-				layer : this.props.initialLayer	
+				layer : this.props.initialLayer
 		}
 	},
 	onChange:function() {
@@ -197,10 +196,16 @@ var LayerEditor = React.createClass({
 });
 
 var HtmlGenerator = React.createClass({
+  generateOutput: function(e) {
+    e.preventDefault();
+    var resultHtml = document.getElementById("dragContainer").outerHTML;
+    document.querySelector(".html-result").textContent = resultHtml.replace(/(data-reactid=)/g,"");
+  },
 	render: function(){
 		return (
 			<div>
 				<h2> HTML Content </h2>
+        <button onClick={this.generateOutput}>Generate Output</button>
 				<div className="html-result"></div>
 			</div>
 		);
@@ -231,8 +236,6 @@ var MoveTool = React.createClass({
 		);
 	}
 })
-
-
 
 
 var available_tool_list = []
