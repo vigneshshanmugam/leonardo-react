@@ -199,7 +199,7 @@ var HtmlGenerator = React.createClass({
   generateOutput: function(e) {
     e.preventDefault();
     var resultHtml = document.getElementById("dragContainer").outerHTML;
-    document.querySelector(".html-result").textContent = resultHtml.replace(/(data-reactid=)/g,"");
+    document.querySelector(".html-result").textContent = resultHtml.replace(/data-reactid=".*?"/g,"");
   },
 	render: function(){
 		return (
