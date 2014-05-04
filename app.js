@@ -218,8 +218,7 @@ var PaintBucketTool = React.createClass({
 			<div>paint bucket tool</div>
 		);
 	}
-})
-
+});
 
 var TextTool = React.createClass({
 	render:function() {
@@ -227,16 +226,7 @@ var TextTool = React.createClass({
 			<div>Text tool</div>
 		);
 	}
-})
-
-var MoveTool = React.createClass({
-	render:function() {
-		return (
-			<div>move tool</div>
-		);
-	}
-})
-
+});
 
 var available_tool_list = []
 React.renderComponent(
