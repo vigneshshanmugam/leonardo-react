@@ -13,4 +13,5 @@
 	border: 1px solid #D8D1D1;
 	width: 730px;
 	height: 200px;
+	overflow:scroll;
 }
