@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="main.css">
+	<script src="bower_components/underscore/underscore-min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="bower_components/react/react.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="bower_components/react/JSXTransformer.js" type="text/javascript" charset="utf-8"></script>
+	<script src="EventBus.js" type="text/javascript" charset="utf-8"></script>
+
+	<script src="app.js" type="text/jsx" charset="utf-8"></script>
+
+</head>
+<body>
+	<div id="app">
+	</div>
+
+	<script type="text/javascript">
+		(function(){
+			var draggedElement = null;
+			var container = document.getElementById("dragContainer"), startX,startY,initialMouseX,initialMouseY;
+
+			function initDragDrop(){
+				document.addEventListener ("mousedown" , eleMouseDown , false);
+			}
+			function eleMouseDown (e){
+				var target = e.target;
+				if(target && target.className == "draggable"){
+					startX = target.offsetLeft;
+					startY = target.offsetTop;
+					draggedElement = target;
+				}
+				initialMouseX = e.clientX;
+				initialMouseY = e.clientY;
+				document.addEventListener ("mousemove" , eleMouseMove , false);
+				document.addEventListener ("mouseup" , eleMouseUp , false);
+				return false;
+			}
+
+			function eleMouseMove (e) {
+
+          if (!draggedElement) {
+              return;
+          }
+					var dX = e.clientX - initialMouseX;
+					var dY = e.clientY - initialMouseY;
+
+
+					var allowedWidth = dragContainer.clientWidth - draggedElement.clientWidth,
+						allowedHeight = dragContainer.clientHeight - draggedElement.clientHeight;
+
+						// console.log("allowedWidth  : " + allowedWidth + "...." + "allowedHeight :  " + allowedHeight);
+
+					setPosition(dX,dY,allowedWidth,allowedHeight);
+
+		      return false;
+	 		}
+
+	        function setPosition(dx,dy,allowedWidth,allowedHeight){
+	        	var calcLeft = startX + dx , calcTop = startY + dy;
+						// console.log("calcLeft  : " + calcLeft + "...." + "calcTop :  " + calcTop);
+	        	if(calcLeft >= 0 && calcLeft <= allowedWidth){
+	        		draggedElement.style.left = calcLeft + 'px';
+	        	}
+	        	if(calcTop >= 0 && calcTop <= allowedHeight){
+	        		draggedElement.style.top =  calcTop + 'px';
+	        	}
+	        }
+
+	        function eleMouseUp(e)
+	        {
+	            if (draggedElement != null)
+	            {
+	                document.onmousemove = null;
+	                document.onselectstart = null;
+
+	                draggedElement = null;
+	            }
+	        }
+	        window.onload = initDragDrop();
+		})();
+	</script>
+</body>
+</html>
