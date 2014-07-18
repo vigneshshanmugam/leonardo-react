@@ -233,3 +233,40 @@ React.renderComponent(
   <Project tools={available_tool_list} width="730" height="300" />,
   document.getElementById('app')
 );
+
+
+/* Playing with Polymer and Custom Elements */
+// var XFooProto = Object.create(HTMLElement.prototype);
+
+// XFooProto.createdCallback = function() {
+// 	var shadow = this.createShadowRoot();
+//   shadow.innerHTML = "<b>I'm an x-foo-with-markup!</b>";
+// };
+
+// var XFoo = document.registerElement('x-foo', {prototype: XFooProto});
+
+// var element = document.createElement("x-foo");
+// document.body.appendChild(element);
+
+
+// <template id="template">
+//   <style>
+//     p { color: orange; }
+//   </style>
+//   <p>I'm in Shadow DOM</p>
+// </template>
+
+// <script>
+// var proto = Object.create(HTMLElement.prototype, {
+//   createdCallback: {
+//     value: function() {
+//       var t = document.querySelector('#template');
+//       var clone = document.importNode(t.content, true);
+//       this.createShadowRoot().appendChild(clone);
+//     }
+//   }
+// });
+// document.registerElement('x-foo', {prototype: proto});
+// </script>
+
+
